@@ -14,3 +14,10 @@ jobs:
 
       - name: List files
         run: ls -la
+
+      - name: Generate ASCII Art
+        run: |
+          sudo apt-get install -y figlet
+          figlet "GH-200"
+          echo "-----------------------------"
+          figlet -f digital "GitHUB ACTIONS"
