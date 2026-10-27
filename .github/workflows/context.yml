@@ -22,7 +22,7 @@ jobs:
     name: 🔔 Notify Team
     needs: deploy
     if: always()
-    uses: gh200-cohack/.github/workflows/reusable-notify.yml
+    uses: hkdas21/gh200-cohack/.github/workflows/reusable-notify.yml
     with:
       message: "CoHack Journey run #${{ github.run_number }} finished!"
       environment: ${{ inputs.environment || 'staging' }}
