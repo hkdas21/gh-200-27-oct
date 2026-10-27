@@ -17,4 +17,5 @@ jobs:
 
       - name: Run Shell Script
         run: |
+          chmod +x scripts/greet.sh
           ./scripts/greet.sh
