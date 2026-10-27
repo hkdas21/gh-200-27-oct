@@ -1,0 +1,35 @@
+name: Jobs
+
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      - name: 🖥️ Run Greeting Script
+        run: |
+          chmod +x scripts/greet.sh
+          ./scripts/greet.sh
+
+  build:
+    runs-on: ubuntu-latest
+    needs: setup                    # ← Runs AFTER setup
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      - name: 🔨 Simulate Build
+        run: |
+          echo "Building the application..."
+          echo "Build completed at $(date)" > build-report.txt
+          cat build-report.txt
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build                    # ← Runs AFTER build
+    steps:
+      - name: 🧪 Simulate Tests
+        run: |
+          echo "Running tests..."
+          echo "✅ All tests passed!"
