@@ -2,8 +2,10 @@ name: matrix
 
 on: workflow_dispatch
 
+jobs:
   test:
     runs-on: ${{ matrix.os }}
+    needs: build
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
