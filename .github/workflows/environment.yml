@@ -1,0 +1,61 @@
+name: Environment Deployment Demo
+
+on:
+  push: 
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Building application..."
+          sleep 5
+          echo "✅ Build successful!"
+
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: staging
+
+    steps:
+      - name: Deploy to Staging
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+          SECRET: ${{ secrets.SECRET }}
+        run: |
+          echo "🚀 Deploying to STAGING"
+          echo "Application URL: $APP_URL"
+          echo "Secret: $APP_SECRET"
+          echo "✅ Staging deployment completed!"
+
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+
+    environment:
+      name: production
+
+    steps:
+      - name: Deploy to Production
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+          SECRET: ${{ secrets.SECRET }}
+        run: |
+          echo "🚀 Deploying to PRODUCTION"
+          echo "Application URL: $APP_URL"
+          echo "Secret: $APP_SECRET"
+          echo "✅ Production deployment completed!"
