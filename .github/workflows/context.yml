@@ -1,6 +1,6 @@
 name: context
 
-on: workflow_dispatch
+on: push
 
 jobs:
   deploy:
