@@ -16,3 +16,15 @@ jobs:
           echo "Runner: ${{ runner.os }} / ${{ runner.arch }}"
           echo "Workflow: ${{ github.workflow }}"
           echo "Run Number: ${{ github.run_number }}"
+
+    
+  notify-team:
+    name: 🔔 Notify Team
+    needs: deploy
+    if: always()
+    uses: gh200-cohack/blob/main/.github/workflows/reusable-notify.yml
+    with:
+      message: "CoHack Journey run #${{ github.run_number }} finished!"
+      environment: ${{ inputs.environment || 'staging' }}
+    secrets:
+      NOTIFY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
