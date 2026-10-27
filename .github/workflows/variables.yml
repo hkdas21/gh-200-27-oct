@@ -1,0 +1,36 @@
+name: variables
+
+on: [push]
+
+env:                                     # Workflow-level variable
+  WORKSHOP_NAME: "GH-200 CoHack"
+  TRAINER: "Himanshu Kumar"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      JOB_ENV: "Job var"             # Job-level variable
+    steps:
+      - name: 🔍 Show Variables
+        env:
+          STEP_VAR: "Step-level value"   # Step-level variable
+        run: |
+          echo "Workshop: $WORKSHOP_NAME"
+          echo "Job Env: $JOB_ENV"
+          echo "Step Var: $STEP_VAR"
+          echo "GitHub Actor: $GITHUB_ACTOR"
+          echo "Repo: $GITHUB_REPOSITORY"
+
+      - name: 🔐 Use Repository Secret
+        env:
+          MY_SECRET: ${{ secrets.MY_API_KEY }}  # Never echoed in logs
+        run: |
+          echo "Secret is configured: ${{ secrets.MY_API_KEY != '' }}"
+          echo "Using secret safely in script (masked in logs)"
+          echo "Workshop: $WORKSHOP_NAME"
+          echo "Job Env: $JOB_ENV"
+          echo "Step Var: $STEP_VAR"
+          echo "My Secret: $MY_SECRET"
+          echo "GitHub Actor: $GITHUB_ACTOR"
+          echo "Repo: $GITHUB_REPOSITORY"
