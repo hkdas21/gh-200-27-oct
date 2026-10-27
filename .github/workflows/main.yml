@@ -15,9 +15,6 @@ jobs:
       - name: List files
         run: ls -la
 
-      - name: Generate ASCII Art
+      - name: Run Shell Script
         run: |
-          sudo apt-get install -y figlet
-          figlet "GH-200"
-          echo "-----------------------------"
-          figlet -f digital "GitHUB ACTIONS"
+          ./scripts/greet.sh
