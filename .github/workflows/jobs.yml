@@ -21,15 +21,27 @@ jobs:
         uses: actions/checkout@v4
       - name: 🔨 Simulate Build
         run: |
-          echo "Building the application..."
-          echo "Build completed at $(date)" > build-report.txt
-          cat build-report.txt
+          mkdir -p build-output
+          echo "Build Report - $(date)" > build-output/build-report.txt
+          echo "Commit: $GITHUB_SHA" >> build-output/build-report.txt
+          echo "Branch: $GITHUB_REF_NAME" >> build-output/build-report.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report
+          path: build-output/
+          retention-days: 3
 
   test:
     runs-on: ubuntu-latest
     needs: build                    # ← Runs AFTER build
     steps:
-      - name: 🧪 Simulate Tests
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-report
+    
+      - name: Check Artifact
         run: |
-          echo "Running tests..."
-          echo "✅ All tests passed!"
+          cat build-report.txt
