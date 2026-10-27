@@ -1,0 +1,14 @@
+name: timeout
+
+on: workflow_dispatch
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10              # Job timeout
+    steps:
+      - name: ⏱️ Step with Timeout
+        timeout-minutes: 1           # Step timeout
+        run: |
+          echo "This step must complete in 2 minutes"
+          sleep 90
